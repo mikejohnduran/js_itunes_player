@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>iTunes API Tutorial</title>
+    <link rel="shortcut icon" href="http://findicons.com/files/icons/2770/ios_7_icons/512/music.png">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="stylesheet.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Fira+Sans" rel="stylesheet">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/amplitudejs@v3.3.0/dist/amplitude.js"></script>
+
+</head>
+
+<body background="wallpaper.jpg">
+    <img id="logo" src="pineapple.png">
+    <p class="title">Pineapple Music
+        <p class="introMsg">This is a Javascript project that uses Apple's iTunes API. Below in the address box, you can search for music by
+            title or artist. Credit to Apple and Pineapple Supply Co. for the photograph. </p>
+    </p>
+    <nav>
+        <div class="nav-wrapper">
+            <form>
+                <div class="input-field">
+                    <input id="search" type="search" required>
+                    <label class="label-icon" for="search">
+                        <i class="material-icons">search</i>
+                    </label>
+                    <i class="material-icons">close</i>
+                </div>
+            </form>
+        </div>
+    </nav>
+
+    <div class="carousel">
+        <a class="carousel-item" href="#one!">
+            <img src="https://lorempixel.com/250/250/nature/1">
+        </a>
+    </div>
+
+
+    <ul id="songs">
+        <img id="loadingImage" src="loading_gif.gif" alt="loading" />
+    </ul>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+    <script>
+        $("#loadingImage").hide()
+        $("form").submit(function (e) {
+            e.preventDefault()
+            $("#loadingImage").show()
+            var usrInput = $("input").val();
+            $.ajax({
+                url: "http://itunes.apple.com/search?term=" + usrInput,
+                dataType: 'JSONP'
+            })
+                .done(function (data) {
+                    console.log(data);
+                    $("#loadingImage").hide()
+                    if (data.results.length === 0) {
+                        $('#songs').append("<li>No Results</li>")
+                    } else {
+                        $('#songs').html("")
+                    }
+                    for (var i = 0; i < data.results.length; i++) {
+                        if (data.results[i].trackName) {
+                            $('#songs').append("<li>" + data.results[i].trackName + "</li>");
+                        }
+                    }
+                })
+
+                .fail(function (data) {
+                    console.log(data);
+                    $('#songs').append(data.status);
+                })
+
+        });
+    </script>
+    <script src="script.js"></script>
+</body>
+
+</html>

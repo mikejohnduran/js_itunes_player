@@ -1,0 +1,33 @@
+.title {
+  text-align: center;
+  font-family: 'Fira Sans', sans-serif;
+  font-size: 60px;
+  color: white;
+  font-weight: 600;
+}
+
+.nav-wrapper {
+  background-color: white;
+  color: white;
+  margin-top: 10%;
+  margin-bottom: -5%;
+}
+
+.introMsg {
+  font-family: 'Fira Sans', sans-serif;
+  font-size: 12px;
+  color: white;
+  font-weight: lighter;
+  text-align: center;
+}
+
+#logo {
+  margin-right: 50px;
+  margin-left: 150px;
+  top: 20px;
+  position: absolute;
+}
+
+.body {
+  color: white;
+}
